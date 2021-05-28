@@ -37,7 +37,8 @@ def bootstrap_environment(flow_name, env_id):
             yaml.safe_dump(cached_deps[env_id], f)
         conda_env_path = os.path.join(os.getcwd(), env_id)
         args = [
-            "apt-get -qq -y install wget >/dev/null 2>&1",
+            "if ! type wget >/dev/null 2>&1; \
+            then apt-get -qq -y install wget >/dev/null 2>&1; fi",
             install_conda_cmds,
             "cd {0}".format(os.getcwd()),
             "conda env create -f {0} -p {1} >/dev/null 2>&1".format(
