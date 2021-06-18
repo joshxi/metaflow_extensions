@@ -1,4 +1,3 @@
-from distutils.version import LooseVersion
 import tempfile
 
 import metaflow.plugins.conda.conda as mf_conda

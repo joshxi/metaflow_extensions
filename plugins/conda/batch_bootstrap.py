@@ -3,7 +3,6 @@ import shutil
 import sys
 import tempfile
 
-from metaflow.datatools import S3
 from metaflow.metaflow_config import DATASTORE_LOCAL_DIR
 import yaml
 
@@ -25,9 +24,7 @@ def bootstrap_environment(flow_name, env_id):
     install_conda_cmds = "if ! type conda  >/dev/null 2>&1; \
             then wget -q https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh; \
             sh Miniconda3-latest-Linux-x86_64.sh -b -p miniconda3 >/dev/null 2>&1; \
-            . miniconda3/bin/activate base; fi".format(
-        "https://repo.anaconda.com/pkgs/misc/conda-execs/conda-latest-linux-64.exe"
-    )
+            . miniconda3/bin/activate base; fi"
     with tempfile.TemporaryDirectory() as tmp_dir:
         manifest_folder = setup_conda_manifest(flow_name)
         with open(os.path.join(manifest_folder, CONDA_MAGIC_FILE)) as f:

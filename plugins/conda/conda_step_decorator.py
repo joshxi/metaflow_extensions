@@ -26,7 +26,7 @@ class CondaStepDecorator(mf_conda.CondaStepDecorator):
         Libraries to use for this step. The key is the name of the package and the value
         is the version to use. Defaults to {}
     pip : Dict
-        Pip packages to install for this step. The key is the name of the package and the 
+        Pip packages to install for this step. The key is the name of the package and the
         value is the version to use. Defaults to {}
     python : string
         Version of Python to use (for example: '3.7.4'). Defaults to None
