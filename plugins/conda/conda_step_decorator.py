@@ -66,7 +66,13 @@ class CondaStepDecorator(mf_conda.CondaStepDecorator):
         if "pip" not in conda_libs:
             conda_libs_list.append("pip")
         deps.extend(sorted(conda_libs_list))
-        deps.append({"pip": sorted([f"{k}=={v}" for k, v in pip_pkgs.items()])})
+        deps.append(
+            {
+                "pip": sorted(
+                    [f"{k} @ {v}" if "git+ssh" in v else f"{k}=={v}" for k, v in pip_pkgs.items()]
+                )
+            }
+        )
         return deps
 
     def _env_id(self):
@@ -82,15 +88,10 @@ class CondaStepDecorator(mf_conda.CondaStepDecorator):
         cached_deps = read_conda_manifest(ds_root, self.flow.name)
         if CondaStepDecorator.conda is None:
             CondaStepDecorator.conda = Conda()
-            CondaStepDecorator.environments = CondaStepDecorator.conda.environments(
-                self.flow.name
-            )
+            CondaStepDecorator.environments = CondaStepDecorator.conda.environments(self.flow.name)
         if env_id not in cached_deps or env_id not in CondaStepDecorator.environments:
             deps = self._step_deps()
-            env_dict = {
-                "channels": self.conda.config()["channels"],
-                "dependencies": deps,
-            }
+            env_dict = {"channels": self.conda.config()["channels"], "dependencies": deps}
             self.conda.create(
                 self.step,
                 env_id,
@@ -98,8 +99,6 @@ class CondaStepDecorator(mf_conda.CondaStepDecorator):
                 architecture=self.architecture,
                 disable_safety_checks=self.disable_safety_checks,
             )
-            CondaStepDecorator.environments = CondaStepDecorator.conda.environments(
-                self.flow.name
-            )
+            CondaStepDecorator.environments = CondaStepDecorator.conda.environments(self.flow.name)
             write_to_conda_manifest(ds_root, self.flow.name, env_id, env_dict)
         return env_id

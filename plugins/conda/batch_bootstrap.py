@@ -14,8 +14,7 @@ def setup_conda_manifest(flow_name):
     if not os.path.exists(manifest_folder):
         os.makedirs(manifest_folder)
     shutil.move(
-        os.path.join(os.getcwd(), CONDA_MAGIC_FILE),
-        os.path.join(manifest_folder, CONDA_MAGIC_FILE),
+        os.path.join(os.getcwd(), CONDA_MAGIC_FILE), os.path.join(manifest_folder, CONDA_MAGIC_FILE)
     )
     return os.path.join(os.getcwd(), DATASTORE_LOCAL_DIR, flow_name)
 
@@ -38,10 +37,7 @@ def bootstrap_environment(flow_name, env_id):
             then apt-get -qq -y install wget >/dev/null 2>&1; fi",
             install_conda_cmds,
             "cd {0}".format(os.getcwd()),
-            "conda env create -f {0} -p {1} >/dev/null 2>&1".format(
-                conda_yaml_path, conda_env_path
-            ),
-            f"conda activate {conda_env_path}; conda list",
+            "conda env create -f {0} -p {1}".format(conda_yaml_path, conda_env_path),
         ]
         os.system(" && ".join(args))
 
