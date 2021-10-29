@@ -6,7 +6,7 @@ import tempfile
 from metaflow.metaflow_config import DATASTORE_LOCAL_DIR
 import yaml
 
-from . import CONDA_MAGIC_FILE
+from metaflow_extensions.constants import CONDA_MAGIC_FILE
 
 
 def setup_conda_manifest(flow_name):
@@ -36,8 +36,8 @@ def bootstrap_environment(flow_name, env_id):
             "if ! type wget >/dev/null 2>&1; \
             then apt-get -qq -y install wget >/dev/null 2>&1; fi",
             install_conda_cmds,
-            "cd {0}".format(os.getcwd()),
-            "conda env create -f {0} -p {1}".format(conda_yaml_path, conda_env_path),
+            f"cd {os.getcwd()}",
+            f"conda env create -f {conda_yaml_path} -p {conda_env_path} -q",
         ]
         os.system(" && ".join(args))
 

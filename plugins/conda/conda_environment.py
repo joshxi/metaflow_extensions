@@ -21,7 +21,7 @@ class CondaEnvironment(mf_conda_env.CondaEnvironment):
             return [
                 "mflog 'Bootstrapping environment...'",
                 BASH_SAVE_LOGS,
-                'python -m metaflow_custom.plugins.conda.batch_bootstrap "%s" %s'
+                'python -m metaflow_extensions.batch_bootstrap.conda "%s" %s'
                 % (self.flow.name, env_id),
                 "mflog 'Environment bootstrapped.'",
                 BASH_SAVE_LOGS,

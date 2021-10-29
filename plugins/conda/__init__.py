@@ -4,7 +4,7 @@ import fcntl
 
 import yaml
 
-CONDA_MAGIC_FILE = "conda_envs.yaml"
+from metaflow_extensions.constants import CONDA_MAGIC_FILE
 
 
 def get_conda_manifest_path(ds_root, flow_name):
