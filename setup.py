@@ -11,6 +11,6 @@ setup(
     author_email="josh.xi@upstart.com",
     description="Metaflow extension with a custom conda decorator",
     setup_requires=["setuptools_scm"],
-    install_requires=["metaflow>=2.4.0"],
+    install_requires=["metaflow>=2.4.0", "pyyaml>=5.4.1"],
     python_requires=">=3.7.0",
 )
